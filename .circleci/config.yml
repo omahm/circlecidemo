@@ -7,7 +7,7 @@ jobs:
       - checkout # check out the code in the project directory
       - run: echo "hello world" # run the `echo` command
       - run:
-        name: Code Has Arrived
-        command: |
-          ls -al
-          echo '^^^That should look familiar^^^'
+          name: Code Has Arrived
+          command: |
+            ls -al
+            echo '^^^That should look familiar^^^'
