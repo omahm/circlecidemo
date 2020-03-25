@@ -1,21 +1,40 @@
 version: 2.1
 jobs:
-  build:
+  Hello-World:
     docker:
-      - image: circleci/node:10-browsers
+      - image: alpine:3.7
     steps:
-      - checkout # check out the code in the project directory
       - run:
-          name: The First Step
+          name: Hello World
           command: |
             echo 'Hello World!'
             echo 'This is the delivery pipeline'
+  I-Have-Code:
+    docker:
+      - image: alpine:3.7
+    steps:
+      - checkout
       - run:
           name: Code Has Arrived
           command: |
             ls -al
             echo '^^^That should look familiar^^^'
+  Run-With-Node:
+    docker:
+      - image: circleci/node:10-browsers
+    steps:
       - run:
-          name: Running in a Unique Container
+          name: Running In A Container With Node
           command: |
             node -v
+workflows:
+  version: 2
+  Example_Workflow:
+    jobs:
+      - Hello-World
+      - I-Have-Code:
+          requires:
+            - Hello-World
+      - Run-With-Node:
+          requires:
+            - Hello-World
