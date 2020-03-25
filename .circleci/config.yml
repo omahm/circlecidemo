@@ -27,6 +27,15 @@ jobs:
           name: Running In A Container With Node
           command: |
             node -v
+  Now-Complete:
+    docker:
+      - image: alpine:3.7
+    steps:
+      - run:
+          name: Approval Complete
+          command: |
+            echo 'Do work once the approval has completed'
+
 workflows:
   version: 2
   Example_Workflow:
@@ -38,3 +47,11 @@ workflows:
       - Run-With-Node:
           requires:
             - Hello-World
+      - Hold-For-Approval:
+          type: approval
+          requires:
+            - Run-With-Node
+            - I-Have-Code
+      - Now-Complete:
+          requires:
+            - Hold-For-Approval
