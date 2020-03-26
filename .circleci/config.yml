@@ -19,6 +19,16 @@ jobs:
           command: |
             ls -al
             echo '^^^That should look familiar^^^'
+  Environment-Vars:
+    docker:
+      - image: alpine:3.7
+    steps:
+      - run:
+          name: "DB User var"
+          command: echo ${DB_USER}
+      - run:
+          name: "DB Pass var"
+          command: echo ${DB_PASS}
   Run-With-Node:
     docker:
       - image: circleci/node:10-browsers
@@ -47,6 +57,9 @@ workflows:
       - Run-With-Node:
           requires:
             - Hello-World
+      - Environment-Vars:
+          requires:
+            - I-Have-Code
       - Hold-For-Approval:
           type: approval
           requires:
